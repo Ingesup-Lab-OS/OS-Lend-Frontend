@@ -1,1 +1,4 @@
 Django>=1.5
+python-novaclient
+python-heatclient
+pyaml
