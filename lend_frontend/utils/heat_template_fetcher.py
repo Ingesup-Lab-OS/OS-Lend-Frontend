@@ -8,14 +8,15 @@ import sys
 from django.conf import settings
 
 class HeatTemplateFetcher:
-    CLONE_URL = 'https://github.com/Ingesup-Lab-OS/OS-Lend-Templates.git'
-    HEAT_TEMPLATE_NAME = 'OS-Lend-Templates'
-    HEAT_TEMPLATE_URL = 'https://github.com/Ingesup-Lab-OS/OS-Lend-Templates/commits/master'
+    # Refactor : Move into settings
+    CLONE_URL                = 'https://github.com/Ingesup-Lab-OS/OS-Lend-Templates.git'
+    HEAT_TEMPLATE_NAME       = 'OS-Lend-Templates'
+    HEAT_TEMPLATE_URL        = 'https://github.com/Ingesup-Lab-OS/OS-Lend-Templates/commits/master'
     LAST_COMMIT_HASH_PATTERN = '<a href="/Ingesup-Lab-OS/OS-Lend-Templates/commit/(\w+)" class="gobutton ">'
 
     def __init__(self):
         self.remote_commit_hash = self.getRemoteCommitHash()
-        self.heat_template_dir = settings.BASE_DIR+'/'+self.HEAT_TEMPLATE_NAME
+        self.heat_template_dir  = settings.BASE_DIR+'/'+self.HEAT_TEMPLATE_NAME
 
     def getRemoteCommitHash(self):
         response = urllib2.urlopen(self.HEAT_TEMPLATE_URL)
@@ -63,7 +64,3 @@ class HeatTemplateFetcher:
 
     def done(self):
         print self.HEAT_TEMPLATE_NAME+' is up to date'
-
-if __name__ == "__main__":
-    fetcher = HeatTemplateFetcher()
-    fetcher.startFetching()
