@@ -1,10 +1,149 @@
-<form action="/" method="POST">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value="Submit">
-</form>
+<div class="col-sm-6">
+    <form action="/" method="POST" class="form-horizontal" role="form">
+        {% csrf_token %} 
+        <fieldset class="form-group">
+            {{ form.projectName.errors }}
+            <label class="col-sm-4 control-label" for="id_{{ form.projectName.name }}">{{ form.projectName.label }}</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control"
+                    name="{{ form.projectName.name }}"
+                    id="id_{{ form.projectName.name }}"
+                    placeholder="{{ form.projectName.label }}"
+                    value="{{ form.projectName.value|default:'' }}" > 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            {{ form.description.errors }}
+            <label class="col-sm-4 control-label" for="id_{{ form.description.name }}">{{ form.description.label }}</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control"
+                    name="{{ form.description.name }}"
+                    id="id_{{ form.description.name }}"
+                    placeholder="{{ form.description.label }}"
+                    value="{{ form.description.value|default:'' }}" > 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            {{ form.mail.errors }}
+            <label class="col-sm-4 control-label" for="id_{{ form.mail.name }}">{{ form.mail.label }}</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control"
+                    name="{{ form.mail.name }}"
+                    id="id_{{ form.mail.name }}"
+                    placeholder="{{ form.mail.label }}"
+                    value="{{ form.mail.value|default:'' }}" > 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            {{ form.sshKey.errors }}
+            <label class="col-sm-4 control-label" for="id_{{ form.sshKey.name }}">{{ form.sshKey.label }}</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control"
+                    name="{{ form.sshKey.name }}"
+                    placeholder="{{ form.sshKey.label }}"
+                    id="id_{{ form.sshKey.name }}"
+                    value="{{ form.sshKey.value|default:'' }}" > 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            {{ form.validity.errors }}
+            <label class="col-sm-4 control-label" for="id_{{ form.validity.name }}">{{ form.validity.label }}</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control"
+                    name="{{ form.validity.name }}"
+                    placeholder="{{ form.validity.label }}"
+                    id="id_{{ form.validity.name }}"
+                    value="{{ form.validity.initial }}" > 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            {{ form.description.errors }}
+            <label class="col-sm-4 control-label" for="id_{{ form.description.name }}">{{ form.description.label }}</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control"
+                    name="{{ form.description.name }}"
+                    placeholder="{{ form.description.label }}"
+                    id="id_{{ form.description.name }}"
+                    value="{{ form.description.value|default:'' }}" > 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label class="col-sm-4 control-label" for="id_{{ form.flavor.name }}">{{ form.flavor.label }}</label>
+            <div id="div_flavor" 
+                class="col-sm-8" 
+                data-toggle="popover"
+                data-content="&lt;div&gt;This is your div content&lt;/div&gt;"
+                data-placement="bottom">
+                {{ form.flavor }}
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label class="col-sm-4 control-label" for="id_{{ form.heatTemplate.name }}">{{ form.heatTemplate.label }}</label>
+            <div class="col-sm-8">
+                {{ form.heatTemplate }}
+            </div>
+        </fieldset>
+        
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Submit"  class="btn btn-primary">
+            </div>
+        </div>
+    </form>    
+</div>
+
+<div class="col-sm-6">
+    <div class="row-fluid">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ form.flavor.label }}</h3>
+            </div>
+            <div id="panel_flavor_content" class="panel-body">
+                <table id="flavor_table" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Ram</th>
+                            <th>Disk</th>
+                            <th>Vcpus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="flavor_name"></td>
+                            <td id="flavor_ram"></td>
+                            <td id="flavor_disk"></td>
+                            <td id="flavor_vcpus"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ form.heatTemplate.label }}</h3>
+            </div>
+            <div id="panel_heat_template_content" class="panel-body">
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
+    var selectFlavor = $('select#id_flavor[name=flavor]');
+    var selectHeatTemplate = $('select#id_heatTemplate[name=heatTemplate]');
+
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
@@ -19,8 +158,8 @@
         $.ajax({
             type: "POST",
             url: '/flavor/'+ id + '/',
-            success: function(data){
-                console.log(data)
+            success: function(data) {
+                setFlavor(data);
             }
         });
     }
@@ -35,11 +174,23 @@
         });
     }
 
+    var setFlavor = function(flavor){
+        $('table#flavor_table > tbody > tr > td#flavor_name').empty().html(flavor.name);
+        $('table#flavor_table > tbody > tr > td#flavor_ram').empty().html(flavor.ram);
+        $('table#flavor_table > tbody > tr > td#flavor_disk').empty().html(flavor.disk);
+        $('table#flavor_table > tbody > tr > td#flavor_vcpus').empty().html(flavor.vcpus);
+    }
+
     $(document).ready(function(){
-        $('select#id_flavor[name=flavor]').change(function(){
+
+        getFlavor(selectFlavor.val());
+        getHeatTemplate(selectHeatTemplate.val());
+        
+        selectFlavor.change(function(){
             getFlavor($(this).val());
         });
-        $('select#id_heatTemplate[name=heatTemplate]').change(function(){
+
+        selectHeatTemplate.change(function(){
             getHeatTemplate($(this).val());
         });
     });
