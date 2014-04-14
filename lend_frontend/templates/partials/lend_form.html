@@ -3,3 +3,44 @@
 	{{ form.as_p }}
 	<input type="submit" value="Submit">
 </form>
+
+<script>
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    var csrftoken = getCookie('csrftoken');
+
+    var getFlavor = function(id){
+        $.ajax({
+            type: "POST",
+            url: '/flavor/'+ id + '/',
+            success: function(data){
+                console.log(data)
+            }
+        });
+    }
+
+    var getHeatTemplate = function(id){
+        $.ajax({
+            type: "POST",
+            url: '/heat_template/'+ id + '/',
+            success: function(data){
+                console.log(data)
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        $('select#id_flavor[name=flavor]').change(function(){
+            getFlavor($(this).val());
+        });
+        $('select#id_heatTemplate[name=heatTemplate]').change(function(){
+            getHeatTemplate($(this).val());
+        });
+    });
+</script>

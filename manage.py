@@ -10,6 +10,6 @@ if __name__ == "__main__":
     from lend_frontend.utils.heat_template_fetcher import HeatTemplateFetcher
 
     fetcher = HeatTemplateFetcher()
-    fetcher.startFetching()
+    fetcher.start_fetching()
 
     execute_from_command_line(sys.argv)

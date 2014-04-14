@@ -9,5 +9,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'lend_frontend.views.index', name='index')
+    url(r'^$', 'lend_frontend.views.index', name='index'),
+    url(r'^flavor/(?P<id>[_a-zA-Z0-9\-]+)/$', 'lend_frontend.views.flavor', name='flavor'),
+    url(r'^heat_template/(?P<id>\w+)/$', 'lend_frontend.views.heat_template', name='heat_template')
 )

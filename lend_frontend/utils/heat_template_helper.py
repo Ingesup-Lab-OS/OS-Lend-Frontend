@@ -3,14 +3,14 @@ from string_helper import StringHelper
 
 class HeatTemplateHelper:
     @staticmethod
-    def getYamlFilesList(path):
+    def get_yaml_files_list(path):
         from glob import glob
         if path[-1] != '/':
             path += '/'
         return glob("%s*.yml" % path)
 
     @staticmethod
-    def getTupleFromFile(file):
+    def get_tuple_fromfile(file):
         """
         Get the file name in path and return a tuple
         with (filename, title)
@@ -24,20 +24,20 @@ class HeatTemplateHelper:
         return (m.group(1), StringHelper.replace_all(m.group(1), { '-': ' ', '_': ' '}))
 
     @staticmethod
-    def getAllTuplesFromPath(path):
-        yamls = HeatTemplateHelper.getYamlFilesList(path)
+    def get_all_tuples_from_path(path):
+        yamls = HeatTemplateHelper.get_yaml_files_list(path)
         l = []
         for p in yamls:
-            l.append(HeatTemplateHelper.getTupleFromFile(p))
+            l.append(HeatTemplateHelper.get_tuple_fromfile(p))
         return tuple(l)
 
 if __name__ == "__main__":
     v = 'oki'
     v2 = 'oki2'
     print "%s/%s" %(v, v2)
-    yamls = HeatTemplateHelper.getYamlFilesList("../../OS-Lend-Templates/heat/")
+    yamls = HeatTemplateHelper.get_yaml_files_list("../../OS-Lend-Templates/heat/")
     l = []
     for path in yamls:
-        l.append(HeatTemplateHelper.getTupleFromFile(path))
+        l.append(HeatTemplateHelper.get_tuple_fromfile(path))
     print tuple(l)
-    print HeatTemplateHelper.getAllTuplesFromPath("../../OS-Lend-Templates/heat/")
+    print HeatTemplateHelper.get_all_tuples_from_path("../../OS-Lend-Templates/heat/")
