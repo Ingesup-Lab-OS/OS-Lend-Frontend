@@ -10,6 +10,6 @@ urlpatterns = patterns('',
 
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'lend_frontend.views.index', name='index'),
-    url(r'^flavor/(?P<id>[_a-zA-Z0-9\-]+)/$', 'lend_frontend.views.flavor', name='flavor'),
-    url(r'^heat_template/(?P<id>\w+)/$', 'lend_frontend.views.heat_template', name='heat_template')
+    url(r'^flavor/(?P<id>[_a-zA-Z0-9\-\_]+)/$', 'lend_frontend.views.flavor', name='flavor'),
+    url(r'^heat_template/(?P<id>[_a-zA-Z0-9\-\_]+)/$', 'lend_frontend.views.heat_template', name='heat_template')
 )

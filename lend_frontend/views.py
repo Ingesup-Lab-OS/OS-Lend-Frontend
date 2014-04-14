@@ -32,7 +32,7 @@ def flavor(request, id=0):
 def heat_template(request, id=0):
     if id != 0 or request.is_ajax():
         dic = {
-            'description': 'oki'
+            'description': id
         }
         return HttpResponse(json.dumps(dic), mimetype='application/json')
 
