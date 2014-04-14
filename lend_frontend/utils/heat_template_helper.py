@@ -30,14 +30,3 @@ class HeatTemplateHelper:
         for p in yamls:
             l.append(HeatTemplateHelper.get_tuple_fromfile(p))
         return tuple(l)
-
-if __name__ == "__main__":
-    v = 'oki'
-    v2 = 'oki2'
-    print "%s/%s" %(v, v2)
-    yamls = HeatTemplateHelper.get_yaml_files_list("../../OS-Lend-Templates/heat/")
-    l = []
-    for path in yamls:
-        l.append(HeatTemplateHelper.get_tuple_fromfile(path))
-    print tuple(l)
-    print HeatTemplateHelper.get_all_tuples_from_path("../../OS-Lend-Templates/heat/")

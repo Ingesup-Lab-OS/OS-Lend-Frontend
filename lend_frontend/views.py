@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .lend_form import LendForm
 from libs.nova_flavor_provider import NovaFlavorProvider
+from utils.heat_template_fetcher import HeatTemplateFetcher
 from django.http import Http404, HttpResponse
 import json
 
@@ -31,8 +32,12 @@ def flavor(request, id=0):
 
 def heat_template(request, id=0):
     if id != 0 or request.is_ajax():
+        htf = HeatTemplateFetcher()
+        yaml_file = htf.get_yaml_file_path_from_name(id)
+        yaml_dic = htf.get_yaml(yaml_file)
+        description = yaml_dic['description'] or ''
         dic = {
-            'description': id
+            'description': description
         }
         return HttpResponse(json.dumps(dic), mimetype='application/json')
 

@@ -134,7 +134,20 @@
                 <h3 class="panel-title">{{ form.heatTemplate.label }}</h3>
             </div>
             <div id="panel_heat_template_content" class="panel-body">
-
+                <table id="heat_template_table" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="heat_template_name"></td>
+                            <td id="heat_template_description"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -169,7 +182,7 @@
             type: "POST",
             url: '/heat_template/'+ id + '/',
             success: function(data){
-                console.log(data)
+                setHeatTemplate(data);
             }
         });
     }
@@ -179,6 +192,11 @@
         $('table#flavor_table > tbody > tr > td#flavor_ram').empty().html(flavor.ram);
         $('table#flavor_table > tbody > tr > td#flavor_disk').empty().html(flavor.disk);
         $('table#flavor_table > tbody > tr > td#flavor_vcpus').empty().html(flavor.vcpus);
+    }
+
+    var setHeatTemplate = function(heatTemplate){
+        $('table#heat_template_table > tbody > tr > td#heat_template_name').empty().html(selectHeatTemplate.val());
+        $('table#heat_template_table > tbody > tr > td#heat_template_description').empty().html(heatTemplate.description);
     }
 
     $(document).ready(function(){

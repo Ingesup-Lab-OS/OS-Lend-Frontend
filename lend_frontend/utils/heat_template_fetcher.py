@@ -64,3 +64,15 @@ class HeatTemplateFetcher:
 
     def done(self):
         print self.HEAT_TEMPLATE_NAME+' is up to date'
+
+    def get_yaml_file_path_from_name(self, file_name):
+        file_path = "%s/heat/%s.yml" %(self.heat_template_dir, file_name)
+        if os.path.exists(file_path):
+            return file_path
+        return False
+
+    def get_yaml(self, file_path):
+        import yaml
+        stream = open(file_path, 'r')
+        yaml_file = yaml.load(stream)
+        return yaml_file
