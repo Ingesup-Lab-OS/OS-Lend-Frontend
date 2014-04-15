@@ -35,7 +35,8 @@ def heat_template(request, id=0):
         htf = HeatTemplateFetcher()
         yaml_file = htf.get_yaml_file_path_from_name(id)
         yaml_dic = htf.get_yaml(yaml_file)
-        description = yaml_dic['description'] or ''
+        description = htf.get_description_from_yaml(yaml_dic)
+        print yaml_dic
         dic = {
             'description': description
         }

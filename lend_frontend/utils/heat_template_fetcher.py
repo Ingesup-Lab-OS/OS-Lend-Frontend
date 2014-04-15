@@ -74,5 +74,8 @@ class HeatTemplateFetcher:
     def get_yaml(self, file_path):
         import yaml
         stream = open(file_path, 'r')
-        yaml_file = yaml.load(stream)
-        return yaml_file
+        yaml_dic = yaml.load(stream)
+        return yaml_dic if yaml_dic else {}
+
+    def get_description_from_yaml(self, yaml):
+        return yaml['description'] if 'description' in yaml else None
