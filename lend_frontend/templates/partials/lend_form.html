@@ -2,31 +2,27 @@
     <form action="/" method="POST" class="form-horizontal" role="form">
         {% csrf_token %} 
         <fieldset class="form-group">
-            {{ form.projectName.errors }}
-            <label class="col-sm-4 control-label" for="id_{{ form.projectName.name }}">{{ form.projectName.label }}</label>
+            {% for e in form.project_name.errors %}
+                <div class="alert alert-danger">
+                    <span>{{ e }}</span>
+                </div>
+            {% endfor %}
+            <label class="col-sm-4 control-label" for="id_{{ form.project_name.name }}">{{ form.project_name.label }}</label>
             <div class="col-sm-8">
                 <input type="text" class="form-control"
-                    name="{{ form.projectName.name }}"
-                    id="id_{{ form.projectName.name }}"
-                    placeholder="{{ form.projectName.label }}"
-                    value="{{ form.projectName.value|default:'' }}" > 
+                    name="{{ form.project_name.name }}"
+                    id="id_{{ form.project_name.name }}"
+                    placeholder="{{ form.project_name.label }}"
+                    value="{{ form.project_name.value|default:'' }}" > 
             </div>
         </fieldset>
 
         <fieldset class="form-group">
-            {{ form.description.errors }}
-            <label class="col-sm-4 control-label" for="id_{{ form.description.name }}">{{ form.description.label }}</label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control"
-                    name="{{ form.description.name }}"
-                    id="id_{{ form.description.name }}"
-                    placeholder="{{ form.description.label }}"
-                    value="{{ form.description.value|default:'' }}" > 
-            </div>
-        </fieldset>
-
-        <fieldset class="form-group">
-            {{ form.mail.errors }}
+            {% for e in form.mail.errors %}
+                <div class="alert alert-danger">
+                    <span>{{ e }}</span>
+                </div>
+            {% endfor %}
             <label class="col-sm-4 control-label" for="id_{{ form.mail.name }}">{{ form.mail.label }}</label>
             <div class="col-sm-8">
                 <input type="text" class="form-control"
@@ -38,42 +34,59 @@
         </fieldset>
 
         <fieldset class="form-group">
-            {{ form.sshKey.errors }}
-            <label class="col-sm-4 control-label" for="id_{{ form.sshKey.name }}">{{ form.sshKey.label }}</label>
+            {% for e in form.ssh_key.errors %}
+                <div class="alert alert-danger">
+                    <span>{{ e }}</span>
+                </div>
+            {% endfor %}
+            <label class="col-sm-4 control-label" for="id_{{ form.ssh_key.name }}">{{ form.ssh_key.label }}</label>
             <div class="col-sm-8">
                 <input type="text" class="form-control"
-                    name="{{ form.sshKey.name }}"
-                    placeholder="{{ form.sshKey.label }}"
-                    id="id_{{ form.sshKey.name }}"
-                    value="{{ form.sshKey.value|default:'' }}" > 
+                    name="{{ form.ssh_key.name }}"
+                    placeholder="{{ form.ssh_key.label }}"
+                    id="id_{{ form.ssh_key.name }}"
+                    value="{{ form.ssh_key.value|default:'' }}" > 
             </div>
         </fieldset>
 
         <fieldset class="form-group">
-            {{ form.validity.errors }}
+            {% for e in form.validity.errors %}
+                <div class="alert alert-danger">
+                    <span>{{ e }}</span>
+                </div>
+            {% endfor %}
             <label class="col-sm-4 control-label" for="id_{{ form.validity.name }}">{{ form.validity.label }}</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control"
+                <input class="form-control datepicker"
                     name="{{ form.validity.name }}"
                     placeholder="{{ form.validity.label }}"
                     id="id_{{ form.validity.name }}"
-                    value="{{ form.validity.initial }}" > 
+                    value="{{ form.validity.initial }}" >
             </div>
         </fieldset>
 
         <fieldset class="form-group">
-            {{ form.description.errors }}
+            {% for e in form.description.errors %}
+                <div class="alert alert-danger">
+                    <span>{{ e }}</span>
+                </div>
+            {% endfor %}
             <label class="col-sm-4 control-label" for="id_{{ form.description.name }}">{{ form.description.label }}</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control"
+                <textarea class="form-control"
                     name="{{ form.description.name }}"
                     placeholder="{{ form.description.label }}"
                     id="id_{{ form.description.name }}"
-                    value="{{ form.description.value|default:'' }}" > 
+                    value="{{ form.description.value|default:'' }}" ></textarea> 
             </div>
         </fieldset>
 
         <fieldset class="form-group">
+            {% for e in form.flavor.errors %}
+                <div class="alert alert-danger">
+                    <span>{{ e }}</span>
+                </div>
+            {% endfor %}
             <label class="col-sm-4 control-label" for="id_{{ form.flavor.name }}">{{ form.flavor.label }}</label>
             <div id="div_flavor" 
                 class="col-sm-8" 
@@ -85,9 +98,14 @@
         </fieldset>
 
         <fieldset class="form-group">
-            <label class="col-sm-4 control-label" for="id_{{ form.heatTemplate.name }}">{{ form.heatTemplate.label }}</label>
+            {% for e in form.heat_template.errors %}
+                <div class="alert alert-danger">
+                    <span>{{ e }}</span>
+                </div>
+            {% endfor %}
+            <label class="col-sm-4 control-label" for="id_{{ form.heat_template.name }}">{{ form.heat_template.label }}</label>
             <div class="col-sm-8">
-                {{ form.heatTemplate }}
+                {{ form.heat_template }}
             </div>
         </fieldset>
         
@@ -131,7 +149,7 @@
     <div class="row-fluid">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">{{ form.heatTemplate.label }}</h3>
+                <h3 class="panel-title">{{ form.heat_template.label }}</h3>
             </div>
             <div id="panel_heat_template_content" class="panel-body">
                 <table id="heat_template_table" class="table table-bordered table-striped">
@@ -155,7 +173,7 @@
 
 <script>
     var selectFlavor = $('select#id_flavor[name=flavor]');
-    var selectHeatTemplate = $('select#id_heatTemplate[name=heatTemplate]');
+    var selectHeatTemplate = $('select#id_heat_template[name=heat_template]');
 
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {

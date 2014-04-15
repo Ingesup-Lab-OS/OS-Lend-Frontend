@@ -1,3 +1,11 @@
+$(document).ready(function(){
+    $('.datepicker').datepicker({
+        language: 'fr',
+        defaultDate: new Date(),
+        startDate: new Date()
+    })
+})
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
