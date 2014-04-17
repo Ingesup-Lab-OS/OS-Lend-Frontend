@@ -57,7 +57,7 @@ class HeatTemplateFetcher:
         if not error:
             if not out == self.remote_commit_hash:
                 print 'pulling repository...'
-                pull()
+                self.pull()
             self.done()
         else:
             print error
