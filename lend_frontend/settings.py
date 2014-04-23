@@ -87,3 +87,10 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+OS_PARAMS = {
+    'auth_url': 'http://10.31.92.131:5000/v2.0',
+    'tenant_name': 'OS-Lend',
+    'username': 'a.cavat',
+    'password': 'CecoojEg8'
+}

@@ -4,10 +4,13 @@ from libs.nova_flavor_provider import NovaFlavorProvider
 from utils.heat_template_fetcher import HeatTemplateFetcher
 from django.http import Http404, HttpResponse
 from django.utils.html import strip_tags
+from heatclient.common import template_utils
+from utils.heat_client_helper import HeatClientHelper
 import json
 
 # Create your views here.
 def index(request):
+    test_create()
     if request.method == 'POST':
         form = LendForm(request.POST)
         if form.is_valid():
