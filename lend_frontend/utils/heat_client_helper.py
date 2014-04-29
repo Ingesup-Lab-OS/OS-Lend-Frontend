@@ -14,3 +14,11 @@ class HeatClientHelper:
 
     def get_client(self):
         return self.client
+
+    def stack_exists(self, stack_name):
+        try:
+            hc.stacks.get(stack_name)
+        except:
+            return False
+            
+        return True

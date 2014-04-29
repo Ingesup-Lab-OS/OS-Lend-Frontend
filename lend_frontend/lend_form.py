@@ -4,23 +4,30 @@ from django import forms
 from django.conf import settings
 from utils.heat_template_helper import HeatTemplateHelper
 from libs.nova_flavor_provider import NovaFlavorProvider
+from utils.heat_client_helper import HeatClientHelper
 import datetime
+from django.core.exceptions import ValidationError
 
+def validate_stack_name_exists(value):
+    hch = HeatClientHelper(**settings.OS_PARAMS)
+    if(hch.stack_exists(value)):
+        raise ValidationError('Un projet portant ce nom existe déjà.')
+    
 class LendForm(forms.Form):
 
     project_name = forms.CharField(label='Nom du projet', 
-        error_messages={'required': 'Le nom du projet est requis'})
+        error_messages={'required': 'Le nom du projet est requis'},
+        validators=[validate_stack_name_exists])
     
-    description = forms.CharField(label='Déscription', required=False)
+    description = forms.CharField(label='Description', required=False)
     
     mail = forms.EmailField(label='Email',
         error_messages={'required': 'Votre adresse mail est requise'})
     
-    ssh_key = forms.CharField(label='Clé SSH' )
+    ssh_key = forms.CharField(label='Clé SSH', required=False)
     
     validity = forms.DateField(label='Validité', 
-        initial=datetime.date.today, 
-        input_formats=['%d/%m/%y'],
+        input_formats=['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'],
         error_messages={'required': 'Veuillez selectionner une date'})
 
     nova_flavor = NovaFlavorProvider().get_flavors_list()

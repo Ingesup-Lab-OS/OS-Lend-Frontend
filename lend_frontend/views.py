@@ -5,16 +5,24 @@ from utils.heat_template_fetcher import HeatTemplateFetcher
 from django.http import Http404, HttpResponse
 from django.utils.html import strip_tags
 from heatclient.common import template_utils
-from utils.heat_client_helper import HeatClientHelper
+from utils.heat_template_helper import HeatTemplateHelper
 import json
 
 # Create your views here.
 def index(request):
-    test_create()
     if request.method == 'POST':
         form = LendForm(request.POST)
         if form.is_valid():
-            form.cleaned_data['subject']
+            project_name = form.cleaned_data['project_name']
+            mail = form.cleaned_data['mail']
+            ssh_key = form.cleaned_data['ssh_key']
+            validity = form.cleaned_data['validity']
+            description = form.cleaned_data['description']
+            flavor = form.cleaned_data['flavor']
+
+            template_id = form.cleaned_data['heat_template']
+            template_path = HeatTemplateHelper.get_full_path_from_file_name(template_id)
+
     else:
         form = LendForm()
 

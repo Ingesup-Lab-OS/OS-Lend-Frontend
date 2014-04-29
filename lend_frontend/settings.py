@@ -94,3 +94,10 @@ OS_PARAMS = {
     'username': 'a.cavat',
     'password': 'CecoojEg8'
 }
+
+SHORT_TEMPLATE_FOLDER = 'OS-Lend-Templates/heat'
+FULL_TEMPLATE_FOLDER = BASE_DIR+ '/'+SHORT_TEMPLATE_FOLDER
+
+SUBNET_ID = '00e35c36-b081-4733-842d-5a335fab5ae3'
+NET_ID = '84fe7f1a-880d-4c4b-a34c-dd9e34911229'
+FLOATING_ID = '53d84562-4718-41f2-9989-f848ecbd1aa6'

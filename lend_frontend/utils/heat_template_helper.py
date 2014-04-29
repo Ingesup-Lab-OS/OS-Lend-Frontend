@@ -1,5 +1,6 @@
 import re
 from string_helper import StringHelper
+from django.conf import settings
 
 class HeatTemplateHelper:
     @staticmethod
@@ -30,3 +31,12 @@ class HeatTemplateHelper:
         for p in yamls:
             l.append(HeatTemplateHelper.get_tuple_fromfile(p))
         return tuple(l)
+
+    @staticmethod
+    def get_full_path_from_file_name(file_name):
+        full_path = '%s/%s.yml' %(settings.FULL_TEMPLATE_FOLDER, file_name)
+        from os.path import exists
+        if exists(full_path):
+            return full_path
+
+        raise ValueError('Le template yaml est introuvable.')
