@@ -27,7 +27,7 @@ class LendForm(forms.Form):
     ssh_key = forms.CharField(label='Clé SSH', required=False)
     
     validity = forms.DateField(label='Validité', 
-        input_formats=['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'],
+        input_formats=['%Y-%m-%d', '%d/%m/%Y', '%d/%m/%Y'],
         error_messages={'required': 'Veuillez selectionner une date'})
 
     nova_flavor = NovaClientHelper(**settings.OS_PARAMS).get_flavors_list()

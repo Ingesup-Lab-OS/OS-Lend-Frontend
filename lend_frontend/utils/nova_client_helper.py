@@ -1,6 +1,7 @@
+from novaclient.v1_1 import client
+
 class NovaClientHelper:
     def __init__(self, **kwargs):
-        from novaclient.v1_1 import client
         self.client = client.Client(
             kwargs['username'],
             kwargs['password'],

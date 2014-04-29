@@ -18,12 +18,3 @@ class KeystoneHelper:
 
     def get_token(self):
         return self.token
-
-if __name__ == "__main__":
-    kc_args = {
-        'auth_url': 'http://10.31.92.131:5000/v2.0',
-        'tenant_name': 'OS-Lend',
-        'username': 'a.cavat',
-        'password': 'CecoojEg8'
-    }
-    print KeystoneHelper(**kc_args).get_token()

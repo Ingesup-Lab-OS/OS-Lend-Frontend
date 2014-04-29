@@ -10,6 +10,7 @@ import json
 from utils.nova_client_helper import NovaClientHelper
 from utils.heat_template_fetcher import HeatTemplateFetcher
 from utils.heat_template_helper import HeatTemplateHelper
+from utils.heat_client_helper import HeatClientHelper
 
 # Create your views here.
 def index(request):
@@ -25,6 +26,35 @@ def index(request):
 
             template_id = form.cleaned_data['heat_template']
             template_path = HeatTemplateHelper.get_full_path_from_file_name(template_id)
+            tpl_files, template_content = template_utils.get_template_contents(template_path)
+
+            kp = NovaClientHelper(**settings.OS_PARAMS).keypair_create(project_name)
+
+            parameters = {
+                'f_name': flavor,
+                'kp_name': project_name,
+                'img_name': 'Ubuntu precise',
+                'subnet_id': settings.SUBNET_ID,
+                'net_id': settings.NET_ID,
+                'floating_id': settings.FLOATING_ID,
+                'description': description,
+                'mail': mail,
+                'validity': validity.isoformat()
+            }
+
+            fields = {
+                'stack_name': project_name,
+                'disable_rollback': True,
+                'template': template_content,
+                'parameters': parameters,
+            }
+
+            _htc = HeatClientHelper(**settings.OS_PARAMS).get_client()
+            testor = _htc.stacks.create(**fields)
+            from time import sleep
+            sleep(30)
+            fields['parameters']['mail'] = 'lolilol lol'
+            testor.update(**fields)
 
     else:
         form = LendForm()
