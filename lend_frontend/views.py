@@ -1,12 +1,15 @@
 from django.shortcuts import render
-from .lend_form import LendForm
-from libs.nova_flavor_provider import NovaFlavorProvider
-from utils.heat_template_fetcher import HeatTemplateFetcher
 from django.http import Http404, HttpResponse
 from django.utils.html import strip_tags
+from django.conf import settings
+
+from .lend_form import LendForm
 from heatclient.common import template_utils
-from utils.heat_template_helper import HeatTemplateHelper
 import json
+
+from utils.nova_client_helper import NovaClientHelper
+from utils.heat_template_fetcher import HeatTemplateFetcher
+from utils.heat_template_helper import HeatTemplateHelper
 
 # Create your views here.
 def index(request):
@@ -33,7 +36,7 @@ def index(request):
 def flavor(request, id=0):
     if id != 0 or request.is_ajax():
         id = strip_tags(id)
-        flavor = NovaFlavorProvider().get_flavour_by_id(id)
+        flavor = NovaClientHelper(**settings.OS_PARAMS).get_flavour_by_id(id)
         dic = {
             'id': flavor.id,
             'name': flavor.name,

@@ -3,7 +3,7 @@
 from django import forms
 from django.conf import settings
 from utils.heat_template_helper import HeatTemplateHelper
-from libs.nova_flavor_provider import NovaFlavorProvider
+from utils.nova_client_helper import NovaClientHelper
 from utils.heat_client_helper import HeatClientHelper
 import datetime
 from django.core.exceptions import ValidationError
@@ -30,7 +30,7 @@ class LendForm(forms.Form):
         input_formats=['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'],
         error_messages={'required': 'Veuillez selectionner une date'})
 
-    nova_flavor = NovaFlavorProvider().get_flavors_list()
+    nova_flavor = NovaClientHelper(**settings.OS_PARAMS).get_flavors_list()
     flavor = forms.ChoiceField(nova_flavor, label='Capacité', widget=forms.Select(attrs={'class':'form-control'}))
 
     heat_path = "%s/%s" %(settings.BASE_DIR, settings.HEAT_TEMPLATE_NAME)
