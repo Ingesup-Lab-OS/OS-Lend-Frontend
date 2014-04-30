@@ -15,9 +15,19 @@ class HeatClientHelper:
     def get_client(self):
         return self.client
 
+    def get_completed_stacks(self):
+        #FIXME This shit doesn't work
+        #stacks = self.client.stacks.list(filters={'stack_status': 'CREATE_COMPLETE'})
+        stacks = self.client.stacks.list()
+        created_stacks = []
+        for stack in stacks:
+            if stack.status == 'COMPLETE':
+                created_stacks.append(stack)
+        return created_stacks
+
     def stack_exists(self, stack_name):
         try:
-            hc.stacks.get(stack_name)
+            self.client.stacks.get(stack_name)
         except:
             return False
             

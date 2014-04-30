@@ -30,7 +30,7 @@ class LendForm(forms.Form):
         input_formats=['%Y-%m-%d', '%d/%m/%Y', '%d/%m/%Y'],
         error_messages={'required': 'Veuillez selectionner une date'})
 
-    nova_flavor = NovaClientHelper(**settings.OS_PARAMS).get_flavors_list()
+    nova_flavor = NovaClientHelper(**settings.OS_PARAMS).get_flavors_list(settings.FLAVORS_BL)
     flavor = forms.ChoiceField(nova_flavor, label='Capacité', widget=forms.Select(attrs={'class':'form-control'}))
 
     heat_path = "%s/%s" %(settings.BASE_DIR, settings.HEAT_TEMPLATE_NAME)

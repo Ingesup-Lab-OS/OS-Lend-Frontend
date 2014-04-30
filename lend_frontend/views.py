@@ -51,10 +51,17 @@ def index(request):
 
             _htc = HeatClientHelper(**settings.OS_PARAMS).get_client()
             testor = _htc.stacks.create(**fields)
-            from time import sleep
-            sleep(30)
-            fields['parameters']['mail'] = 'lolilol lol'
-            testor.update(**fields)
+            # astack = _htc.stacks.get(testor['id'])
+            # stacks = HeatClientHelper(**settings.OS_PARAMS).get_completed_stacks()
+            # while not stacks:
+            #     from time import sleep
+            #     sleep(1)
+            #     stacks = HeatClientHelper(**settings.OS_PARAMS).get_completed_stacks()
+            
+            # astack = stacks[0]
+            # fields['parameters']['mail'] = 'fjkdfjmfkjds'
+            # astack.update(**fields)
+
 
     else:
         form = LendForm()

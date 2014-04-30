@@ -10,11 +10,12 @@ class NovaClientHelper:
             service_type="compute"
         )
 
-    def get_flavors_list(self):
+    def get_flavors_list(self, black_list):
         flavors =  self.client.flavors.list()
         l = []
         for f in flavors:
-            l.append(self.get_tuple_from_flavor(f))
+            if not f.name in black_list:
+                l.append(self.get_tuple_from_flavor(f))
 
         return tuple(l)
 
