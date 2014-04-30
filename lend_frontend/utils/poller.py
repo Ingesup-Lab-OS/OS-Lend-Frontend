@@ -10,6 +10,17 @@ class Poller(object):
         def send_mail(**kwargs):
             print 'to do mail'
 
+            clean_dict[o['output_key']] = {
+                'description': o['description'],
+                'value': o['output_value']
+            }
+
+        return clean_dict
+
+    for stack in stacks:
+        full_stack = heat_client.stacks.get(stack.id)
+        template_outputs = full_stack.outputs
+        clean_output = outputs
         stacks = self.heat_helper.get_completed_stacks()
 
         from time import sleep
