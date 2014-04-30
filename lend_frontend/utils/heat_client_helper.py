@@ -1,7 +1,7 @@
 from heatclient import client as heat_client
 from keystone_helper import KeystoneHelper
 
-class HeatClientHelper:
+class HeatClientHelper(object):
     DEFAULT_VERSION = '1'
 
     def __init__(self, **kwargs):
@@ -32,3 +32,11 @@ class HeatClientHelper:
             return False
             
         return True
+
+if __name__ == "__main__":
+    kwargs = {
+        'auth_url': 'http://10.31.92.131:5000/v2.0',
+        'tenant_name': 'OS-Lend',
+        'username': 'a.cavat',
+        'password': 'CecoojEg8'
+    }

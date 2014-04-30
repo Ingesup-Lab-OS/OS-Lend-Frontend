@@ -39,7 +39,8 @@ def index(request):
                 'floating_id': settings.FLOATING_ID,
                 'description': description,
                 'mail': mail,
-                'validity': validity.isoformat()
+                'validity': validity.isoformat(),
+                'notification_status': False,
             }
 
             fields = {
@@ -50,7 +51,10 @@ def index(request):
             }
 
             _htc = HeatClientHelper(**settings.OS_PARAMS).get_client()
-            testor = _htc.stacks.create(**fields)
+            hc = _htc.stacks.create(**fields)
+
+            from django.contrib import messages
+            messages.add_message(request, messages.SUCCESS, 'Well done.')
             # astack = _htc.stacks.get(testor['id'])
             # stacks = HeatClientHelper(**settings.OS_PARAMS).get_completed_stacks()
             # while not stacks:
