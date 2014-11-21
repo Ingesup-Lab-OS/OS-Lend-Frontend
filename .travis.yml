@@ -9,3 +9,6 @@ install:
   - pip install -r test-requirements.txt --use-mirrors
 script:
   - python setup.py testr
+  - python setup.py testr --coverage
+after_success:
+  - coveralls
